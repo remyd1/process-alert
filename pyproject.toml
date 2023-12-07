@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "process-alert"
+version = "0.1.0"
+description = "A process watcher that send alert when process is over"
+authors = ["Rémy Dernat <remy.dernat@umontpellier.fr>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+psutil = "^5.9.6"
+typer-cloup = "^0.11.0"
+asyncio = "^3.4.3"
+desktop-notifier = "^3.5.6"
+logging = "^0.4.9.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
