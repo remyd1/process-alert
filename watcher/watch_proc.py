@@ -1,7 +1,10 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import asyncio
-from watchfiles import awatch
+#from watchfiles import awatch
 import psutil
-import logger as l
+import utils.logger as l
 
 
 def on_terminate(proc):
@@ -18,7 +21,8 @@ async def pswaiter(pid_or_procs):
     else:
         procs = pid_or_procs
         gone, alive = psutil.wait_procs(procs, callback=on_terminate)
-    
+
+"""
 async def watchproc(pid_or_procs):
     if isinstance(pid_or_procs, int):
         pidstr = str(pid)
@@ -30,3 +34,4 @@ async def watchproc(pid_or_procs):
             pidstr = str(proc.pid)
             async for changes in awatch('/proc/' + pidstr + "/"):
                 print(changes)
+"""

@@ -1,0 +1,15 @@
+[general]
+process_name = "geany"
+process_pid = ""
+
+
+[alerting]
+desktop_notification = 0
+matrix_token = "secret_token_here"
+matrix_internal_room_id = "!<internal_id>:<server>"
+matrix_server_url = "matrix server URL"
+smtp_relay = "smtp-int.umontpellier.fr"
+smtp_sender = "me@tld.com"
+smtp_receiver = "me@tld.com"
+smtp_auth_user = ""
+smtp_auth_password = ""

@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 from typing import List
 
 import typer_cloup as typer
 import psutil
-import notifications.desktop_notify as nd
-import notifications.email as ne
 import asyncio
-import watcher.watch_proc as ww
 import json
-import logger as l
+
+import watcher.watch_proc as ww
+import notifications.alertmanager as nal
+import utils.process_lookup_infos as look
+import utils.logger as l
 
 
 app = typer.Typer()
@@ -21,7 +23,7 @@ def name(name: str = typer.Argument(..., help="Process name"), \
         notifymethod: str = typer.Option("local", help="Your additionnal notify option")):
 
     typer.secho(f"Searching for process name(s) {name}", fg=typer.colors.MAGENTA, bold=True)
-    prog = lookup_pid(name)
+    prog = look.lookup_process_from_name(name)
     if not prog:
         typer.secho(f"Your program's name {name} has not been found !", \
             fg=typer.colors.RED, bold=True)
@@ -32,32 +34,11 @@ def name(name: str = typer.Argument(..., help="Process name"), \
         for m in email:
             typer.echo(f"Email address {m} will be used")
     
-    msg = gather_informations(prog)
+    msg = look.gather_informations(prog)
 
     #asyncio.run(ww.watchproc(prog))
     asyncio.run(ww.pswaiter(prog))
-        
-    if notifymethod == "local":
-        asyncio.run(nd.desknotify("process-alert", msg))
-    if email:
-        ne.send(email, name, msg)
-    
-def gather_informations(prog):
-    infos = [proc.as_dict() for proc in prog]
-    msg = json.dumps(infos)
-    with open('process_info.json', 'w') as f:
-        f.write(msg)
-    return msg
-
-def lookup_pid(name):
-    # Simple program that search process name.
-    progs = []
-    for proc in psutil.process_iter(['pid', 'name', 'username']):
-        if proc.info["name"] == name:
-            progs.append(proc)
-            typer.secho(f"Ok. Found process PID {proc.pid}", fg=typer.colors.BLUE, bold=True)
-    return progs
-
+    nal.send_alert(email, notifymethod, "name", name)
 
 if __name__ == "__main__":
     app()

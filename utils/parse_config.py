@@ -16,9 +16,3 @@ def parse_config():
             break
     return config
 
-
-if __name__ == '__main__':
-    config = parse_config()
-    print(config['general']['process_name'])
-    print(config['general']['process_pid'])
-

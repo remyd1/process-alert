@@ -1,3 +1,9 @@
+# project specific ignore
+config/process-alert.conf
+results/*.log
+results/*.json
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
