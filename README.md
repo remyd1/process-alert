@@ -51,6 +51,8 @@ vim config/process-alert.conf
 
 Enter configuration option for your Matrix room, server URL; you also need a token to post messages.
 
+See [here](https://webapps.stackexchange.com/a/138497) on how to retrieve your user token.
+
 Then, to get alerted with Matrix (need `matrix_` values in the configuration file `config/process-alert.conf`):
 
 ```bash
