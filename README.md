@@ -39,8 +39,19 @@ Get alerted with email:
 python3 process_cli.py process_name name geany --email me@tdl.com
 ```
 
-Get alerted with Matrix (need `matrix_` values in the configuration file `config/process-alert.conf`):
 
+### Matrix
+
+Copy and edit the configuration file:
+
+```bash
+cp config/process-alert.conf.sample config/process-alert.conf
+vim config/process-alert.conf
+```
+
+Enter configuration option for your Matrix room, server URL; you also need a token to post messages.
+
+Then, to get alerted with Matrix (need `matrix_` values in the configuration file `config/process-alert.conf`):
 
 ```bash
 python3 process_cli.py process_name name geany --notifymethod matrix
