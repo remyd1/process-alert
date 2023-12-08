@@ -4,9 +4,8 @@
 from typing import List
 
 import typer_cloup as typer
-import psutil
+
 import asyncio
-import json
 
 import watcher.watch_proc as ww
 import notifications.alertmanager as nal
