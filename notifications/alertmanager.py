@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import asyncio
+
 import notifications.desktop_notify as nd
 import notifications.email as ne
 import notifications.matrix as mat
