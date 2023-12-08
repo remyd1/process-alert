@@ -36,7 +36,7 @@ def num(num: int = typer.Argument(..., help="PID number"), \
     
     msg = look.gather_informations(prog)
     
-    asyncio.run(ww.pswaiter(num))
+    asyncio.run(ww.pswaiter(prog))
     #asyncio.run(ww.watchproc(num))
     nal.send_alert(email, notifymethod, "PID", num)
 

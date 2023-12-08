@@ -14,6 +14,7 @@ def gather_informations(prog):
     gather informations about prog using .as_dict() psutil method
 
     :param prog: prog in a psutil.Process() instance
+    :return msg: dictionnary of process informations
     """
     infos = [proc.as_dict() for proc in prog] if isinstance(prog, list) else \
         prog.as_dict()
@@ -44,5 +45,5 @@ def lookup_process_from_pid(num):
     prog = None
     for proc in psutil.process_iter(['pid', 'name', 'username']):
         if proc.info["pid"] == num:
-            prog = proc
+            prog = [proc]
     return prog

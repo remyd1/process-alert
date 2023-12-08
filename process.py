@@ -13,27 +13,15 @@ import utils.logger as l
 
 
 
-def manage_process(process):
+def manage_process(process, processType):
     
-    if(isinstance(process, int)):
-        prog = look.lookup_process_from_pid(process)
+    if processType == "PID":
+        pid = int(process)
+        prog = look.lookup_process_from_pid(pid)
     else:
-        prog = look.lookup_process_from_name(process)
-    
+        prog = look.lookup_process_from_name(process)    
     return prog
 
-    if not prog:
-        typer.secho(f"Process PID: {num} not found !", fg=typer.colors.RED, bold=True)
-        raise typer.Exit(code=1)
-    typer.echo(f"Your notify option {notifymethod} will be used")
-
-    if email:
-        for m in email:
-            typer.echo(f"Email address {m} will be used")
-    
-    
-    asyncio.run(ww.pswaiter(num))
-    nal.send_alert(email, notifymethod, "PID", num)
 
 
 def try_read_val(config, key, section):
@@ -50,11 +38,14 @@ if __name__ == '__main__':
     processType = "name"
     if not process:
         process = try_read_val(config, 'process_pid', 'general')
+        processType = "PID"
     use_email = try_read_val(config, 'use_email', 'alerting')
     if use_email in ["yes", "default"]:
         email = try_read_val(config, 'smtp_receiver', 'alerting')
+    else:
+        email = None
     notifymethod = try_read_val(config, 'notifymethod', 'alerting')
-    prog = manage_process(process)
+    prog = manage_process(process, processType)
     msg = look.gather_informations(prog)
     asyncio.run(ww.pswaiter(prog))
     nal.send_alert(email, notifymethod, processType, process)
