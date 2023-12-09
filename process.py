@@ -3,7 +3,7 @@
 
 import asyncio
 
-from utils import pc
+from utils import parse_config as pc
 
 import watcher.watch_proc as ww
 import notifications.alertmanager as nal
