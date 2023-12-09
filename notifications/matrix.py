@@ -20,3 +20,4 @@ def send_notif(message):
 
     matrix_client = MatrixClient(server, token, room)
     response = matrix_client.populate(message)
+    return response

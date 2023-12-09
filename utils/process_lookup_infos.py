@@ -37,6 +37,7 @@ def lookup_process_from_name(name):
 def lookup_process_from_pid(num):
     """
     :param num: process pid to search in psutil.process_iter
+    :return prog list, a list of psutil.Process() objects
     """
     # a faster option would be to use:
     # psutil.pid_exists(pid)

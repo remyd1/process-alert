@@ -15,6 +15,6 @@ formatter = logging.Formatter('%(asctime)s | %(levelname)s | %(message)s')
 # create file handler which logs even warn messages
 # info messages are displayed to stdout
 logger.setLevel(logging.INFO)
-fhw = logging.FileHandler(dir_path+'/../results/process-alert-warn.log')
+fhw = logging.FileHandler(dir_path+'/../results/process-alert.log')
 fhw.setLevel(logging.WARNING)
 logger.addHandler(fhw)

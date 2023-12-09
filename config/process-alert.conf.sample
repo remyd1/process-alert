@@ -13,6 +13,9 @@ matrix_token = secret_token_here
 matrix_internal_room_id = !<internal_id>
 matrix_server_url = matrix_server_URL
 
+# 'https://{your-mattermost-site}/hooks/xxx-generatedkey-xxx'
+mattermost_hook_url = ""
+
 # use email "default" value to use your server mailer program with
 # your current user@<machine fqdn>
 # otherwise use "no" or "yes" and modify other values

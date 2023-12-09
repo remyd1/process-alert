@@ -3,7 +3,7 @@
 
 import asyncio
 
-from utils import parse_config
+from utils import pc
 
 import watcher.watch_proc as ww
 import notifications.alertmanager as nal
@@ -16,35 +16,29 @@ import utils.logger as l
 def manage_process(process, processType):
     
     if processType == "PID":
-        pid = int(process)
-        prog = look.lookup_process_from_pid(pid)
+        try:
+            pid = int(process)
+            prog = look.lookup_process_from_pid(pid)
+        except Exception as e:
+            raise e
     else:
         prog = look.lookup_process_from_name(process)    
     return prog
 
 
-
-def try_read_val(config, key, section):
-    try:
-        val = config[section][key]
-    except Exception as e:
-        raise e
-    return val
-
-
 if __name__ == '__main__':
-    config = parse_config.parse_config()
-    process = try_read_val(config, 'process_name', 'general')
+    config = pc.parse_config()
+    process = pc.try_read_val(config, 'process_name', 'general')
     processType = "name"
     if not process:
-        process = try_read_val(config, 'process_pid', 'general')
+        process = pc.try_read_val(config, 'process_pid', 'general')
         processType = "PID"
-    use_email = try_read_val(config, 'use_email', 'alerting')
+    use_email = pc.try_read_val(config, 'use_email', 'alerting')
     if use_email in ["yes", "default"]:
-        email = try_read_val(config, 'smtp_receiver', 'alerting')
+        email = pc.try_read_val(config, 'smtp_receiver', 'alerting')
     else:
         email = None
-    notifymethod = try_read_val(config, 'notifymethod', 'alerting')
+    notifymethod = pc.try_read_val(config, 'notifymethod', 'alerting')
     prog = manage_process(process, processType)
     msg = look.gather_informations(prog)
     asyncio.run(ww.pswaiter(prog))

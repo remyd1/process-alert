@@ -16,3 +16,10 @@ def parse_config():
             break
     return config
 
+
+def try_read_val(config, key, section):
+    try:
+        val = config[section][key]
+    except Exception as e:
+        raise e
+    return val

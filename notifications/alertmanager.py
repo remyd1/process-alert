@@ -5,7 +5,10 @@ import asyncio
 
 import notifications.desktop_notify as nd
 import notifications.email as ne
-import notifications.matrix as mat
+import notifications.matrix as matx
+import notifications.mattermost as matst
+
+import utils.logger as l
 
 def send_alert(email, notifymethod, processType, process):
 
@@ -16,6 +19,11 @@ def send_alert(email, notifymethod, processType, process):
     if notifymethod == "local":
         asyncio.run(nd.desknotify(subject, body))
     elif notifymethod == "matrix":
-        mat.send_notif(body)
+        response = matx.send_notif(body)
+    elif notifymethod == "mattermost":
+        response = matst.send_notif(body)
     if email:
         ne.send(email, processTitle, body)
+    if response:
+        l.logger.debug(response)
+    
