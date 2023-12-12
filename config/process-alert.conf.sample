@@ -21,9 +21,8 @@ mattermost_hook_url = ""
 # your current user@<machine fqdn>
 # otherwise use "no" or "yes" and modify other values
 use_email = default
-smtp_relay = smtp.tld.com
+smtp_server = smtp.tld.com
 smtp_sender = me@tld.com
 # multiple values allowed for smtp_receiver (separate values with ",")
 smtp_receiver = me@tld.com
-smtp_auth_user = ""
-smtp_auth_password = ""
+smtp_password = ""

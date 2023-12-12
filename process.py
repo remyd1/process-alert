@@ -7,6 +7,7 @@ from utils import parse_config as cfg
 from utils import validate_options as v
 import watcher.watch_proc as ww
 import notifications.alertmanager as nal
+import notifications.email as ne
 import utils.process_lookup_infos as look
 import utils.logger as l
 from utils import bcolors as bc
@@ -35,10 +36,10 @@ if __name__ == '__main__':
         processType = "PID"
     use_email = cfg.try_read_val(config, 'use_email', 'alerting')
     if use_email in ["yes", "default"]:
-        email = cfg.try_read_val(config, 'smtp_receiver', 'alerting').split(",")
-        email = v.check_emails(email)
+        email_to = cfg.try_read_val(config, 'smtp_receiver', 'alerting').split(",")
+        email_to = v.check_emails(email_to)
     else:
-        email = None
+        email_to = None
     notifymethod = cfg.try_read_val(config, 'notifymethod', 'alerting').split(",")
     notifymethod = v.check_notifymethods(notifymethod)
     prog = manage_process(process, processType)
@@ -47,7 +48,11 @@ if __name__ == '__main__':
     else:
         msg = look.gather_informations(prog)
         asyncio.run(ww.pswaiter(prog))
-        nal.send_alert(email, notifymethod, processType, process)
+        processTitle, subject, body = nal.msg_content(processType, process)
+        if notifymethod:
+            nal.send_alert(notifymethod, subject, body)
+        if email_to:
+            ne.send(email_to, processTitle, body, use_email, None, None, None)
 
 
 
