@@ -17,7 +17,7 @@ cd process-alert
 python3 -m pip install -r requirements.txt
 ```
 
-## Usage
+## CLI Usage
 
 ```bash
 source venv_process_alert/bin/activate
@@ -39,6 +39,7 @@ Get alerted with email:
 python3 process_cli.py process_name name geany --email me@tdl.com
 ```
 
+You can add as many email you want, by adding `--email another@tld.com` ...
 
 ### Matrix
 
@@ -58,3 +59,27 @@ Then, to get alerted with Matrix (need `matrix_` values in the configuration fil
 ```bash
 python3 process_cli.py process_name name geany --notifymethod matrix
 ```
+
+### Mattermost
+
+Setup is a bit more simple as Matrix because you only need to [create a Mattermost webhook](https://developers.mattermost.com/integrate/webhooks/incoming/). Then, add your Mattermost webhook URL to your configuration file `config/process-alert.conf`.
+
+## Using configuration file only
+
+
+You can use this program without any argument by using `process.py` instead of `process_cli.py`. Your configuration file `config/process-alert.conf` will need to all the required informations.
+
+
+```bash
+source venv_process_alert/bin/activate
+cd process-alert
+
+python3 process.py
+```
+
+Config file are checked in the following order:
+
+  - `config/process-alert.conf`,
+  - `~/.config/process-alert.conf`,
+  - `/etc/process-alert/process-alert.conf`.
+  
