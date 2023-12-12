@@ -1,5 +1,5 @@
 - Create a daemon using config file [WIP],
-- Allowing multi alerts,
+- Email method using authentication on a mail server,
 - Check OOM when job is finished,
 - Allowing action after job is finished (re-launch, reboot, shutdown, ...),
 - Allowing monitoring of resources during the run (eg: RAM every x mircoseconds, ...)

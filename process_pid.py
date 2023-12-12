@@ -7,6 +7,7 @@ import typer_cloup as typer
 
 import asyncio
 
+from utils import validate_options as v
 import watcher.watch_proc as ww
 import notifications.alertmanager as nal
 import utils.process_lookup_infos as look
@@ -19,8 +20,10 @@ app = typer.Typer()
 def num(num: int = typer.Argument(..., help="PID number"), \
         email: List[str] = typer.Option(None, \
         help="Email address(es) to send process report"), \
-        notifymethod: str = typer.Option("local", help="Your additionnal notify option")):
+        notifymethod: List[str] = typer.Option(["local"], \
+        help="Your additionnal notify option")):
 
+    num = v.check_PID(num)
     prog = look.lookup_process_from_pid(num)
     if not prog:
         typer.secho(f"Process PID: {num} not found !", fg=typer.colors.RED, bold=True)
@@ -28,9 +31,13 @@ def num(num: int = typer.Argument(..., help="PID number"), \
     else:
         typer.secho(f"Ok. Process PID: {num}", fg=typer.colors.BLUE, bold=True)
 
-    typer.echo(f"Your notify option {notifymethod} will be used")
+    if notifymethod:
+        notifymethod = v.check_notifymethods(notifymethod)
+        for method in notifymethod:
+            typer.echo(f"Your notify option {method} will be used")
 
     if email:
+        email = v.check_emails(email)
         for m in email:
             typer.echo(f"Email address {m} will be used")
     

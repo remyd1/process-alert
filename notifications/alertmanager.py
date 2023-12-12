@@ -16,11 +16,14 @@ def send_alert(email, notifymethod, processType, process):
     subject = "process-alert: {}".format(processTitle)
     body = "Your program with {} {} is over".format(processType, processTitle)
     body += "\nYou will find additionnal informations in process-alert*.log and process_info.json"
-    if notifymethod == "local":
+
+    response = None
+    
+    if "local" in notifymethod:
         asyncio.run(nd.desknotify(subject, body))
-    elif notifymethod == "matrix":
+    if "matrix" in notifymethod:
         response = matx.send_notif(body)
-    elif notifymethod == "mattermost":
+    if "mattermost" in notifymethod:
         response = matst.send_notif(body)
     if email:
         ne.send(email, processTitle, body)

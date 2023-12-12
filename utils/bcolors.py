@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# from blender
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'

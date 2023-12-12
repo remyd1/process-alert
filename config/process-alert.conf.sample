@@ -6,9 +6,10 @@ process_pid = ""
 
 
 [alerting]
-# change "local" to "matrix" to get a matrix notification
+# notifymethod can be local, matrix or mattermost
 # local uses python library desktop-notifier
-notifymethod = local
+# multiple values allowed (separate values with ",")
+notifymethod = local, matrix
 matrix_token = secret_token_here
 matrix_internal_room_id = !<internal_id>
 matrix_server_url = matrix_server_URL
@@ -22,6 +23,7 @@ mattermost_hook_url = ""
 use_email = default
 smtp_relay = smtp.tld.com
 smtp_sender = me@tld.com
+# multiple values allowed for smtp_receiver (separate values with ",")
 smtp_receiver = me@tld.com
 smtp_auth_user = ""
 smtp_auth_password = ""
