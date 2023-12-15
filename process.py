@@ -36,12 +36,16 @@ if __name__ == '__main__':
         processType = "PID"
     use_email = cfg.try_read_val(config, 'use_email', 'alerting')
     if use_email in ["yes", "default"]:
-        email_to = cfg.try_read_val(config, 'smtp_receiver', 'alerting').split(",")
-        email_to = v.check_emails(email_to)
+        email_to = cfg.try_read_val(config, 'smtp_receiver', 'alerting')
+        if email_to:
+            email_to = email_to.split(",")
+            email_to = v.check_emails(email_to)
     else:
         email_to = None
-    notifymethod = cfg.try_read_val(config, 'notifymethod', 'alerting').split(",")
-    notifymethod = v.check_notifymethods(notifymethod)
+    notifymethod = cfg.try_read_val(config, 'notifymethod', 'alerting')
+    if notifymethod:
+        notifymethod = notifymethod.split(",")
+        notifymethod = v.check_notifymethods(notifymethod)
     prog = manage_process(process, processType)
     if not prog:
         raise LookupError(f"{bc.bcolors.FAIL}Process {process} not found !!{bc.bcolors.ENDC}")
