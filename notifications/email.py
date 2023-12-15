@@ -34,16 +34,19 @@ def send(to, processus, content, use_email="default", \
 
     if not smtp_server:
         smtp_server = cfg.try_read_val(config, 'smtp_server', 'alerting')
-        smtp_server = v.strip_dquotes(smtp_server)
+        if smtp_server:
+            smtp_server = v.strip_dquotes(smtp_server)
     if not smtp_password:
         smtp_password = cfg.try_read_val(config, 'smtp_password', 'alerting')
-        smtp_password = v.strip_dquotes(smtp_password)
+        if smtp_password:
+            smtp_password = v.strip_dquotes(smtp_password)
     
     host = socket.getfqdn()
     user = getpass.getuser()
     if not smtp_sender:
         smtp_sender = cfg.try_read_val(config, 'smtp_sender', 'alerting')
-        smtp_sender = v.strip_dquotes(smtp_sender)
+        if smtp_sender:
+            smtp_sender = v.strip_dquotes(smtp_sender)
         if not smtp_sender:
             smtp_sender = "{}@{}".format(user, host)
 
