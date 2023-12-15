@@ -63,10 +63,11 @@ def send(to, processus, content, use_email="default", \
     if use_email == "default":
         # Send the message via our own SMTP server.
         with smtplib.SMTP('localhost') as server:
-            logging.info('Sending email to: {}'.format(msg['To']))
+            l.logger.info('Sending email to: {}'.format(msg['To']))
             server.send_message(msg)
     else:
         context = ssl.create_default_context()
         with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+            l.logger.info('Sending email to: {}'.format(msg['To']))
             server.login(smtp_sender, smtp_password)
             server.send_message(msg)
