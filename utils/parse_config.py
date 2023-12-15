@@ -4,6 +4,7 @@
 import configparser
 from pathlib import Path
 from os import access, R_OK
+import utils.logger as l
 
 def file_readable(file):
     """
@@ -37,5 +38,6 @@ def try_read_val(config, key, section):
     try:
         val = config[section][key]
     except Exception as e:
-        raise e
+        val = None
+        l.logger.error("Value {} in {} does not seem to exist: {}".format(key, section, e))
     return val
