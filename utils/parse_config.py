@@ -5,13 +5,13 @@ import configparser
 from pathlib import Path
 from os import access, R_OK
 
-def file_readable(path):
+def file_readable(file):
     """
     :Param path to a file
     check if file is readable
     """
     assert(access(file, R_OK)), f"File {file} is not readable"
-    return path
+    return file
 
 def parse_config():
     """
