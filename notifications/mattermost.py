@@ -14,7 +14,10 @@ def send_notif(message):
     """
     config = cfg.parse_config()
     hook_url = cfg.try_read_val(config, 'mattermost_hook_url', 'alerting')
-    hook_url = v.check_mattermost_hook_url(hook_url)
+    if hook_url:
+        hook_url = v.check_mattermost_hook_url(hook_url)
+    else:
+        l.logger.error("Could not send any Mattermost notification because mattermost_hook_url seems to be empty")
     
     headers = {"Content-Type": "application/json"}
     values = '{{ "text": "{}"}}'.format(message)
