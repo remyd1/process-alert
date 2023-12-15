@@ -22,8 +22,8 @@ def parse_config():
     paths = ["config/process-alert.conf", "~/.config/process-alert.conf", \
         "/etc/process-alert/process-alert.conf"]
     for p in paths:
-        if path.is_file():
-            path = file_readable(path)
+        if p.is_file():
+            p = file_readable(p)
             config.read(p)
             break
     return config
