@@ -10,6 +10,7 @@ import asyncio
 from utils import validate_options as v
 import watcher.watch_proc as ww
 import notifications.alertmanager as nal
+import notifications.email as ne
 import utils.process_lookup_infos as look
 import utils.logger as l
 
@@ -18,7 +19,7 @@ app = typer.Typer()
 
 @app.command()
 def num(num: int = typer.Argument(..., help="PID number"), \
-        email: List[str] = typer.Option(None, \
+        email_to: List[str] = typer.Option(None, \
         help="Email address(es) to send process report"), \
         notifymethod: List[str] = typer.Option(["local"], \
         help="Your additionnal notify option")):
@@ -36,16 +37,19 @@ def num(num: int = typer.Argument(..., help="PID number"), \
         for method in notifymethod:
             typer.echo(f"Your notify option {method} will be used")
 
-    if email:
-        email = v.check_emails(email)
-        for m in email:
+    if email_to:
+        email_to = v.check_emails(email_to)
+        for m in email_to:
             typer.echo(f"Email address {m} will be used")
     
     msg = look.gather_informations(prog)
     
     asyncio.run(ww.pswaiter(prog))
-    #asyncio.run(ww.watchproc(num))
-    nal.send_alert(email, notifymethod, "PID", num)
+    processTitle, subject, body = nal.msg_content("PID", num)
+    if notifymethod:
+        nal.send_alert(notifymethod, subject, body)
+    if email_to:
+        ne.send(email_to, processTitle, body, None, None, None, None)
 
 if __name__ == "__main__":
     app()
