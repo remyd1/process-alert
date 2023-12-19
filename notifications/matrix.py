@@ -31,6 +31,6 @@ def send_notif(message):
     else:
         l.logger.error("Could not send any Matrix notification because matrix_internal_room_id seems to be empty")
     
-    matrix_client = MatrixClient(server, token, room)
+    matrix_client = MatrixClient(matrix_server_url, token, room)
     response = matrix_client.populate(message)
     return response
