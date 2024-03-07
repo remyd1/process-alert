@@ -36,10 +36,10 @@ python3 process_cli.py process_pid num 11111
 Get alerted with email:
 
 ```bash
-python3 process_cli.py process_name name geany --email me@tdl.com
+python3 process_cli.py process_name name geany --email-to me@tdl.com
 ```
 
-You can add as many email you want, by adding `--email another@tld.com` ...
+You can add as many email you want, by adding `--email-to another@tld.com` ...
 
 ### Matrix
 
